@@ -1,0 +1,22 @@
+services:
+  gitea:
+    image: gitea/gitea:latest
+    restart: always
+    networks:
+      - cftunnel
+    volumes:
+      - /mnt/hd1/gitea/:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    # ports:
+    #   - "80:80"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    restart: always
+    networks:
+      - cftunnel
+    command: tunnel run --token ${TUNNEL_TOKEN}
+networks:
+  cftunnel:
