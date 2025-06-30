@@ -13,7 +13,7 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
   tunnel:
-    image: cloudflare/cloudflared@sha256:09598b52370639bc74daa2faf78731e0922af686f7fb0a6415c6d5c8f0f003b1
+    image: cloudflare/cloudflared@sha256:175aee7e8b548f983f7e3b79ace217676d2a79255a73c074dacb491e59603679
     restart: always
     networks:
       - cftunnel
