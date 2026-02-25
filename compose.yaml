@@ -20,3 +20,4 @@ services:
     command: tunnel run --token ${TUNNEL_TOKEN}
 networks:
   cftunnel:
+    enable_ipv6: true
