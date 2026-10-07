@@ -1,6 +1,6 @@
 services:
   gitea:
-    image: gitea/gitea@sha256:a9dc25679ebdd33356242d2e0667cc220043745e8339922879f187c20329a42e
+    image: gitea/gitea@sha256:f505a0d3a41323b786e05942fc7a4075e07ae7c169fd9485649aa55ee543a21a
     restart: always
     networks:
       - cftunnel
