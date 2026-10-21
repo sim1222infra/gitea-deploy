@@ -1,6 +1,6 @@
 services:
   gitea:
-    image: gitea/gitea@sha256:a9dc25679ebdd33356242d2e0667cc220043745e8339922879f187c20329a42e
+    image: gitea/gitea@sha256:30777c91280d973fa02be48b1ade735bd6859e8f6f7af3b4444d519437852504
     restart: always
     networks:
       - cftunnel
@@ -13,7 +13,7 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
   tunnel:
-    image: cloudflare/cloudflared@sha256:072c067d25ccbe61d46e18f0d0723255f2bb5304f7317caa95b27031520ff92c
+    image: cloudflare/cloudflared@sha256:0e56c13c7058fcef9c4f0e7d83372f82330548dbf8f8b366f3d8b506526d93b2
     restart: always
     networks:
       - cftunnel
