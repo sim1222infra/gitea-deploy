@@ -1,0 +1,5 @@
+# 毎日04:00 バックアップ
+0 4 * * * /usr/local/bin/backup-gitea >> /proc/1/fd/1 2>&1
+
+# 毎週日曜06:00 prune + check
+0 6 * * 0 /usr/local/bin/prune-gitea >> /proc/1/fd/1 2>&1

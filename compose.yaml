@@ -18,6 +18,38 @@ services:
     networks:
       - cftunnel
     command: tunnel run --token ${TUNNEL_TOKEN}
+  gitea-backup:
+    build:
+      context: ./backup
+    # watchdog コンテナ(backup.sh 参照)からも使うため、固定のタグを付ける
+    image: gitea-backup:local
+    container_name: gitea-backup
+    hostname: dell-server-gitea-backup
+    restart: unless-stopped
+    env_file:
+      # RESTIC_REPOSITORY / RESTIC_PASSWORD / AWS_* (gitignore 済み)
+      - ./backup/backup.env
+    environment:
+      TZ: Asia/Tokyo
+      RESTIC_CACHE_DIR: /cache
+      # Go の GC を積極的にしてメモリピークを抑える(restic 推奨の省メモリ設定)
+      GOGC: 50
+      # compose のデフォルト命名 (<プロジェクト名>-<サービス名>-1)
+      GITEA_CONTAINER: gitea-gitea-1
+      WATCHDOG_IMAGE: gitea-backup:local
+    volumes:
+      - /mnt/hd1/gitea:/source/gitea:ro
+      # /source/gitea と同じ Btrfs 上にあること(reflink コピー先)
+      - /mnt/hd1/gitea-backup-staging:/staging
+      - restic-cache:/cache
+      # Gitea を数秒止めるため
+      - /var/run/docker.sock:/var/run/docker.sock
+    deploy:
+      resources:
+        limits:
+          memory: 8192m
 networks:
   cftunnel:
     enable_ipv6: true
+volumes:
+  restic-cache:
